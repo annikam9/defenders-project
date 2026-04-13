@@ -290,7 +290,8 @@ else:
 # ─────────────────────────────────────────────────────────────
 
 with st.container():
-    st.markdown(f'<div class="viz-wrap"><div class="viz-title">{tx("dash_title")}</div><div class="viz-sub">{tx("dash_sub")}</div>', unsafe_allow_html=True)
+   st.markdown(f"""<div class="viz-title">{tx('dash_title')}</div>
+<div class="viz-sub">{tx('dash_sub')}</div>""", unsafe_allow_html=True)
 
     dash_cty = st.selectbox(tx("select_cty"), LATAM, index=LATAM.index("Colombia"), key="dash_cty")
     s   = STATS[dash_cty]
