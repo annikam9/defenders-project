@@ -371,81 +371,75 @@ else:
 # ─────────────────────────────────────────────────────────────
 # VIZ 2: MAP
 # ─────────────────────────────────────────────────────────────
-st.markdown(f"""
-<div class="viz-wrap">
-<div class="viz-title">{tx('map_title')}</div>
-<div class="viz-sub">{tx('map_sub')}</div>
-</div>
-""", unsafe_allow_html=True)
+st.markdown(f"""<div class="viz-title">{tx('map_title')}</div>
+<div class="viz-sub">{tx('map_sub')}</div>""", unsafe_allow_html=True)
 
-with st.container():
-    map_view = st.radio("", [tx("view_world"), tx("view_latam"), tx("view_col")],
-                        horizontal=True, key="map_view", label_visibility="collapsed")
+map_view = st.radio("", [tx("view_world"), tx("view_latam"), tx("view_col")],
+                    horizontal=True, key="map_view", label_visibility="collapsed")
 
-    def build_map(view):
-        fig = go.Figure()
-        countries = [r["country"] for r in WORLD]
-        z_vals    = [r["total"]   for r in WORLD]
-        htexts    = [f"<b>{r['country']}</b><br>{tx('tt_total')}: {r['total']}<br>{tx('tt_2024')}: {r['attacks_2024']}" for r in WORLD]
+def build_map(view):
+    fig = go.Figure()
+    countries = [r["country"] for r in WORLD]
+    z_vals    = [r["total"]   for r in WORLD]
+    htexts    = [f"<b>{r['country']}</b><br>{tx('tt_total')}: {r['total']}<br>{tx('tt_2024')}: {r['attacks_2024']}" for r in WORLD]
 
-        fig.add_trace(go.Choropleth(
-            locations=countries, locationmode="country names",
-            z=z_vals, text=htexts,
-            hovertemplate="%{text}<extra></extra>",
-            colorscale=[[0,"#4a4a4a"],[0.001,"#ffcccc"],[0.05,"#e87070"],
-                        [0.15,"#c93030"],[0.40,"#9b1a1a"],[1.0,"#5c0000"]],
-            zmin=0, zmax=520, showscale=False,
-            marker=dict(line=dict(color="rgba(255,255,255,0.1)", width=0.4)),
-        ))
+    fig.add_trace(go.Choropleth(
+        locations=countries, locationmode="country names",
+        z=z_vals, text=htexts,
+        hovertemplate="%{text}<extra></extra>",
+        colorscale=[[0,"#4a4a4a"],[0.001,"#ffcccc"],[0.05,"#e87070"],
+                    [0.15,"#c93030"],[0.40,"#9b1a1a"],[1.0,"#5c0000"]],
+        zmin=0, zmax=520, showscale=False,
+        marker=dict(line=dict(color="rgba(255,255,255,0.1)", width=0.4)),
+    ))
 
-        if view == "col":
-            df_col = pd.DataFrame(COL_PTS)
-            is_oc  = df_col["perp"].str.contains("Organised crime", na=False)
-            for mask, color in [(~is_oc, "#546778"), (is_oc, "#e74c3c")]:
-                sub = df_col[mask]
-                if len(sub):
-                    fig.add_trace(go.Scattergeo(
-                        lat=sub["lat"], lon=sub["lon"], mode="markers",
-                        marker=dict(symbol="cross", size=10, color=color,
-                                    line=dict(width=2.5, color=color)),
-                        text=sub["name"],
-                        customdata=list(zip(sub["act"], sub["perp"])),
-                        hovertemplate=f"<b>%{{text}}</b><br>{tx('tt_act')}: %{{customdata[0]}}<br>{tx('tt_perp')}: %{{customdata[1]}}<extra></extra>",
-                        showlegend=False,
-                    ))
+    if view == "col":
+        df_col = pd.DataFrame(COL_PTS)
+        is_oc  = df_col["perp"].str.contains("Organised crime", na=False)
+        for mask, color in [(~is_oc, "#546778"), (is_oc, "#e74c3c")]:
+            sub = df_col[mask]
+            if len(sub):
+                fig.add_trace(go.Scattergeo(
+                    lat=sub["lat"], lon=sub["lon"], mode="markers",
+                    marker=dict(symbol="cross", size=10, color=color,
+                                line=dict(width=2.5, color=color)),
+                    text=sub["name"],
+                    customdata=list(zip(sub["act"], sub["perp"])),
+                    hovertemplate=f"<b>%{{text}}</b><br>{tx('tt_act')}: %{{customdata[0]}}<br>{tx('tt_perp')}: %{{customdata[1]}}<extra></extra>",
+                    showlegend=False,
+                ))
 
-        geo_cfgs = {
-            "world": dict(scope="world", projection_type="natural earth",
-                          center=dict(lat=10, lon=0), projection_scale=1),
-            "latam": dict(scope="world", projection_type="mercator",
-                          center=dict(lat=-15, lon=-75), projection_scale=1.2,
-                          lonaxis=dict(range=[-115, -30]),
-                          lataxis=dict(range=[-60, 35])),
-            "col":   dict(scope="world", projection_type="mercator",
-                          center=dict(lat=4.5, lon=-74.0), projection_scale=7),
-        }
-        fig.update_layout(
-            geo=dict(showframe=False, showcoastlines=True,
-                     coastlinecolor="rgba(255,255,255,.15)",
-                     showland=True, landcolor="#3a3a3a",
-                     showocean=True, oceancolor="#181818",
-                     showcountries=True, countrycolor="rgba(255,255,255,.1)",
-                     bgcolor="#0d0d0d", **geo_cfgs[view]),
-            paper_bgcolor="#0d0d0d", plot_bgcolor="#0d0d0d",
-            margin=dict(l=0,r=0,t=0,b=0), height=480,
-            hoverlabel=dict(bgcolor="#141414", bordercolor="rgba(255,255,255,.2)",
-                            font=dict(color="#e8e0d0", size=12)),
-        )
-        return fig
+    geo_cfgs = {
+        "world": dict(scope="world", projection_type="natural earth",
+                      center=dict(lat=10, lon=0), projection_scale=1),
+        "latam": dict(scope="world", projection_type="mercator",
+                      center=dict(lat=-15, lon=-75), projection_scale=1.2,
+                      lonaxis=dict(range=[-115, -30]),
+                      lataxis=dict(range=[-60, 35])),
+        "col":   dict(scope="world", projection_type="mercator",
+                      center=dict(lat=4.5, lon=-74.0), projection_scale=7),
+    }
+    fig.update_layout(
+        geo=dict(showframe=False, showcoastlines=True,
+                 coastlinecolor="rgba(255,255,255,.15)",
+                 showland=True, landcolor="#3a3a3a",
+                 showocean=True, oceancolor="#181818",
+                 showcountries=True, countrycolor="rgba(255,255,255,.1)",
+                 bgcolor="#0d0d0d", **geo_cfgs[view]),
+        paper_bgcolor="#0d0d0d", plot_bgcolor="#0d0d0d",
+        margin=dict(l=0,r=0,t=0,b=0), height=480,
+        hoverlabel=dict(bgcolor="#141414", bordercolor="rgba(255,255,255,.2)",
+                        font=dict(color="#e8e0d0", size=12)),
+    )
+    return fig
 
-    vk = "world"
-    if map_view == tx("view_latam"): vk = "latam"
-    elif map_view == tx("view_col"):  vk = "col"
+vk = "world"
+if map_view == tx("view_latam"): vk = "latam"
+elif map_view == tx("view_col"):  vk = "col"
 
-    st.plotly_chart(build_map(vk), use_container_width=True, config={"displayModeBar": False})
+st.plotly_chart(build_map(vk), use_container_width=True, config={"displayModeBar": False})
 
-    # Legend
-    st.markdown("""
+st.markdown("""
 <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:6px">
   <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#6a6050">Attacks →</span>
   <span style="display:inline-block;width:18px;height:8px;background:#4a4a4a;border:1px solid #666;border-radius:2px"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#6a6050">0</span>
@@ -459,7 +453,7 @@ with st.container():
   <span style="color:#546778;font-size:13px">✕</span><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#6a6050">Other 2024</span>
 </div>
 """, unsafe_allow_html=True)
-    st.markdown(f'<div class="viz-src">{tx("map_source")}</div>', unsafe_allow_html=True)
+st.markdown(f'<div class="viz-src">{tx("map_source")}</div>', unsafe_allow_html=True)
 
 # ─────────────────────────────────────────────────────────────
 # ARTICLE — MID 2
