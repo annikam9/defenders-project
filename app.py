@@ -297,48 +297,44 @@ else:
 # ─────────────────────────────────────────────────────────────
 # VIZ 1: DASHBOARD
 # ─────────────────────────────────────────────────────────────
-
-    st.markdown('<div class="viz-wrap">', unsafe_allow_html=True)
-    dash_cty = st.selectbox(tx("select_cty"), LATAM, index=LATAM.index("Colombia"), key="dash_cty")
-    s   = STATS[dash_cty]
-    oc  = OCI[dash_cty]
-    perps = PERP.get(dash_cty, [])
-
-    c1, c2, c3 = st.columns(3)
-    with c1:
-        st.markdown(f"""<div class="stat-card">
+st.markdown(f"""<div class="viz-title">{tx('dash_title')}</div>
+<div class="viz-sub">{tx('dash_sub')}</div>""", unsafe_allow_html=True)
+dash_cty = st.selectbox(tx("select_cty"), LATAM, index=LATAM.index("Colombia"), key="dash_cty")
+s   = STATS[dash_cty]
+oc  = OCI[dash_cty]
+perps = PERP.get(dash_cty, [])
+c1, c2, c3 = st.columns(3)
+with c1:
+    st.markdown(f"""<div class="stat-card">
   <div class="stat-lbl">{tx('total_lbl')}</div>
   <div class="stat-val red">{s['total']:,}</div>
   <div class="stat-note">{tx('since_lbl')}</div>
 </div>""", unsafe_allow_html=True)
-    with c2:
-        st.markdown(f"""<div class="stat-card">
+with c2:
+    st.markdown(f"""<div class="stat-card">
   <div class="stat-lbl">{tx('oc_lbl')}</div>
   <div class="stat-val amber">{s['oc_share']}%</div>
   <div class="stat-note">{tx('pct_lbl')}</div>
 </div>""", unsafe_allow_html=True)
-    with c3:
-        st.markdown(f"""<div class="stat-card">
+with c3:
+    st.markdown(f"""<div class="stat-card">
   <div class="stat-lbl">{tx('att24_lbl')}</div>
   <div class="stat-val red">{s['attacks_2024']}</div>
   <div class="stat-note">{tx('latest_lbl')}</div>
 </div>""", unsafe_allow_html=True)
-
-    st.markdown("<br>", unsafe_allow_html=True)
-
-    cp, co = st.columns(2)
-    with cp:
-        st.markdown(f"""<div class="stat-card">
+st.markdown("<br>", unsafe_allow_html=True)
+cp, co = st.columns(2)
+with cp:
+    st.markdown(f"""<div class="stat-card">
   <div class="stat-lbl">{tx('perp_lbl')}</div>
   {perp_bars_html(perps)}
 </div>""", unsafe_allow_html=True)
-    with co:
-        st.markdown(f"""<div class="stat-card">
+with co:
+    st.markdown(f"""<div class="stat-card">
   <div class="stat-lbl">{tx('oci_lbl')}</div>
   {oci_html(oc, L)}
 </div>""", unsafe_allow_html=True)
-
-    st.markdown(f'<div class="viz-src">{tx("dash_source")}</div>', unsafe_allow_html=True)
+st.markdown(f'<div class="viz-src">{tx("dash_source")}</div>', unsafe_allow_html=True)
 
 # ─────────────────────────────────────────────────────────────
 # ARTICLE — MID 1
