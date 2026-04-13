@@ -221,6 +221,11 @@ div[data-testid="stVerticalBlock"]>div{background:transparent}
 .stToggle label{color:#fff!important;font-family:'IBM Plex Mono',monospace!important;font-size:12px!important}
 .stExpander{background:#141414!important;border-color:rgba(255,255,255,.15)!important}
 .stExpander summary{color:#e8e0d0!important;font-family:'IBM Plex Mono',monospace!important;font-size:13px!important;font-weight:600!important;letter-spacing:.08em}
+div[data-testid="stMarkdown"]:has(.viz-title) {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
