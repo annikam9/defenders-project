@@ -297,12 +297,6 @@ else:
 # ─────────────────────────────────────────────────────────────
 # VIZ 1: DASHBOARD
 # ─────────────────────────────────────────────────────────────
-st.markdown(f"""
-<div class="viz-wrap">
-<div class="viz-title">{tx('dash_title')}</div>
-<div class="viz-sub">{tx('dash_sub')}</div>
-</div>
-""", unsafe_allow_html=True)
 
 with st.container():
     st.markdown('<div class="viz-wrap">', unsafe_allow_html=True)
