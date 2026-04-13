@@ -294,7 +294,6 @@ else:
 # VIZ 1: DASHBOARD
 # ─────────────────────────────────────────────────────────────
 
-with st.container():
 st.markdown(f"""<div class="viz-title">{tx('dash_title')}</div>
 <div class="viz-sub">{tx('dash_sub')}</div>""", unsafe_allow_html=True)
 
