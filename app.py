@@ -298,7 +298,6 @@ else:
 # VIZ 1: DASHBOARD
 # ─────────────────────────────────────────────────────────────
 
-with st.container():
     st.markdown('<div class="viz-wrap">', unsafe_allow_html=True)
     dash_cty = st.selectbox(tx("select_cty"), LATAM, index=LATAM.index("Colombia"), key="dash_cty")
     s   = STATS[dash_cty]
