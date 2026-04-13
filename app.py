@@ -478,66 +478,61 @@ else:
 # ─────────────────────────────────────────────────────────────
 # VIZ 3: BAR CHART
 # ─────────────────────────────────────────────────────────────
-st.markdown(f"""
-<div class="viz-wrap">
-<div class="viz-title">{tx('chart_title')}</div>
-<div class="viz-sub">{tx('chart_sub')}</div>
-</div>
-""", unsafe_allow_html=True)
+st.markdown(f"""<div class="viz-title">{tx('chart_title')}</div>
+<div class="viz-sub">{tx('chart_sub')}</div>""", unsafe_allow_html=True)
 
-with st.container():
-    cc1, cc2 = st.columns([2, 2])
-    with cc1:
-        chart_cty = st.selectbox(tx("chart_cty"), LATAM,
-                                  index=LATAM.index("Colombia"), key="chart_cty")
-    with cc2:
-        show_oc = st.toggle(tx("show_oc"), value=False, key="show_oc")
+cc1, cc2 = st.columns([2, 2])
+with cc1:
+    chart_cty = st.selectbox(tx("chart_cty"), LATAM,
+                              index=LATAM.index("Colombia"), key="chart_cty")
+with cc2:
+    show_oc = st.toggle(tx("show_oc"), value=False, key="show_oc")
 
-    tl      = TIMELINE[chart_cty]
-    years   = [d["y"] for d in tl]
-    totals  = [d["t"] for d in tl]
-    oc_ns   = [d["oc_n"] for d in tl]
-    others  = [d["t"] - d["oc_n"] for d in tl]
-    oc_pcts = [d["oc_pct"] for d in tl]
+tl      = TIMELINE[chart_cty]
+years   = [d["y"] for d in tl]
+totals  = [d["t"] for d in tl]
+oc_ns   = [d["oc_n"] for d in tl]
+others  = [d["t"] - d["oc_n"] for d in tl]
+oc_pcts = [d["oc_pct"] for d in tl]
 
-    LAY = dict(
-        paper_bgcolor="#141414", plot_bgcolor="#141414",
-        font=dict(family="IBM Plex Mono, monospace", color="#6a6050", size=10),
-        xaxis=dict(showgrid=False, tickmode="array", tickvals=years,
-                   ticktext=[str(y) for y in years], color="#6a6050"),
-        yaxis=dict(showgrid=True, gridcolor="rgba(255,255,255,.04)", color="#6a6050", title=""),
-        legend=dict(bgcolor="rgba(0,0,0,0)", font=dict(color="#a09880", size=10),
-                    orientation="h", x=0, y=1.08),
-        margin=dict(l=40, r=20, t=40, b=40), height=340,
-        hoverlabel=dict(bgcolor="#141414", bordercolor="rgba(255,255,255,.15)",
-                        font=dict(color="#e8e0d0", size=12)),
-        bargap=0.25, transition=dict(duration=500, easing="cubic-in-out"),
-    )
+LAY = dict(
+    paper_bgcolor="#141414", plot_bgcolor="#141414",
+    font=dict(family="IBM Plex Mono, monospace", color="#6a6050", size=10),
+    xaxis=dict(showgrid=False, tickmode="array", tickvals=years,
+               ticktext=[str(y) for y in years], color="#6a6050"),
+    yaxis=dict(showgrid=True, gridcolor="rgba(255,255,255,.04)", color="#6a6050", title=""),
+    legend=dict(bgcolor="rgba(0,0,0,0)", font=dict(color="#a09880", size=10),
+                orientation="h", x=0, y=1.08),
+    margin=dict(l=40, r=20, t=40, b=40), height=340,
+    hoverlabel=dict(bgcolor="#141414", bordercolor="rgba(255,255,255,.15)",
+                    font=dict(color="#e8e0d0", size=12)),
+    bargap=0.25, transition=dict(duration=500, easing="cubic-in-out"),
+)
 
-    fig_bar = go.Figure()
-    if show_oc:
-        fig_bar.add_trace(go.Bar(
-            x=years, y=others, name=tx("other_att"),
-            marker=dict(color="#e87070", line=dict(width=0)),
-            hovertemplate=f"<b>%{{x}}</b><br>{tx('other_att')}: %{{y}}<extra></extra>",
-        ))
-        fig_bar.add_trace(go.Bar(
-            x=years, y=oc_ns, name=tx("oc_att"),
-            marker=dict(color="#7b0000", line=dict(width=0)),
-            hovertemplate=f"<b>%{{x}}</b><br>{tx('oc_att')}: %{{y}}<br>OC share: %{{customdata:.1f}}%<extra></extra>",
-            customdata=oc_pcts,
-        ))
-        fig_bar.update_layout(barmode="stack", **LAY)
-    else:
-        fig_bar.add_trace(go.Bar(
-            x=years, y=totals, name=tx("total_att"),
-            marker=dict(color="#e87070", line=dict(width=0)),
-            hovertemplate=f"<b>%{{x}}</b><br>{tx('total_att')}: %{{y}}<extra></extra>",
-        ))
-        fig_bar.update_layout(barmode="group", **LAY)
+fig_bar = go.Figure()
+if show_oc:
+    fig_bar.add_trace(go.Bar(
+        x=years, y=others, name=tx("other_att"),
+        marker=dict(color="#e87070", line=dict(width=0)),
+        hovertemplate=f"<b>%{{x}}</b><br>{tx('other_att')}: %{{y}}<extra></extra>",
+    ))
+    fig_bar.add_trace(go.Bar(
+        x=years, y=oc_ns, name=tx("oc_att"),
+        marker=dict(color="#7b0000", line=dict(width=0)),
+        hovertemplate=f"<b>%{{x}}</b><br>{tx('oc_att')}: %{{y}}<br>OC share: %{{customdata:.1f}}%<extra></extra>",
+        customdata=oc_pcts,
+    ))
+    fig_bar.update_layout(barmode="stack", **LAY)
+else:
+    fig_bar.add_trace(go.Bar(
+        x=years, y=totals, name=tx("total_att"),
+        marker=dict(color="#e87070", line=dict(width=0)),
+        hovertemplate=f"<b>%{{x}}</b><br>{tx('total_att')}: %{{y}}<extra></extra>",
+    ))
+    fig_bar.update_layout(barmode="group", **LAY)
 
-    st.plotly_chart(fig_bar, use_container_width=True, config={"displayModeBar": False})
-    st.markdown(f'<div class="viz-src">{tx("chart_source")}</div>', unsafe_allow_html=True)
+st.plotly_chart(fig_bar, use_container_width=True, config={"displayModeBar": False})
+st.markdown(f'<div class="viz-src">{tx("chart_source")}</div>', unsafe_allow_html=True)
 
 # ─────────────────────────────────────────────────────────────
 # ARTICLE — CLOSING
