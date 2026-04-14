@@ -241,7 +241,7 @@ L = st.session_state.lang
 # ─────────────────────────────────────────────────────────────
 title_en = 'Green Death: How Organized Crime <span style="color:#e74c3c">Threatens</span> Environmental Defenders'
 title_es = 'Muerte verde: cómo el crimen organizado <span style="color:#e74c3c">amenaza</span> a los defensores ambientales'
-sub_en   = "Standing between nature and destruction comes at a price - and Latin America bears the deadliest cost."
+sub_en   = "Standing between nature and destruction comes at a price — and Latin America bears the deadliest cost."
 sub_es   = "Defender la naturaleza tiene un precio mortal, especialmente en Latinoamérica."
 
 import base64
