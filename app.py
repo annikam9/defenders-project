@@ -95,7 +95,7 @@ T = {
     "EN": {
         "kicker":       "Data report · Environmental violence",
         "byline":       "Story by Caroline Chaffiotte, Annika Mösl, Fernanda Gándara Marchant",
-        "dash_title":   "Lethal attacks against Environmental Defenders and Organized Crime in Latin American countries",
+        "dash_title":   "Overview of Lethal attacks against Environmental Defenders and Organized Crime in Latin American countries",
         "dash_sub":     "Violence and criminality in numbers: Select a Latin American country to explore the full scale of attacks against environmental defenders and the organized crime scores from 2025 with comparison from 2023.",
         "dash_source":  "Source: Global Witness (2025) and Global Initiative Against Transnational Organized Crime (2023–2025).",
         "select_cty":   "Select country",
