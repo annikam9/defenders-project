@@ -553,9 +553,9 @@ with st.container():
 if L == "EN":
     st.markdown("""
 <div class="article-text">
-<p>Colombia went from <strong>no recorded organized crime attacks</strong> in 2022 to <strong>39 in 2023 and 24 the following year</strong>. The cause of this is unclear, but Vladimir Pacheco, a professor at Aarhus University specializing in extractive industries, credits it to high levels of impunity, especially in Latin American countries:</p>
+<p>Colombia went from <strong>no recorded organized crime attacks</strong> in 2022 to <strong>39 in 2023 and 24 the following year</strong>. The cause of this is unclear, but Vladimir Pacheco Cueva, a professor at Aarhus University specializing in extractive industries, credits it to high levels of impunity, especially in Latin American countries:</p>
 <p>"I think it is <strong>more dangerous for an environmental defender</strong> because nothing can stop a warlord [...] or a drug cartel because these governments, they're either abetting it or aiding it or they don't have the ability, even if they want to."</p>
-<p>Pacheco points out that states are also benefiting from extractive markets, both legal and illegal, meaning that they are less incentivized to enforce consequences, which traps environmental defenders in a vicious, violent cycle.</p>
+<p>Pacheco Cueva points out that states are also benefiting from extractive markets, both legal and illegal, meaning that they are less incentivized to enforce consequences, which traps environmental defenders in a vicious, violent cycle.</p>
 <p>"It's not that people don't know there's a problem," says Environmental Law Institute attorney Kristine Perry, "It's about the enforcement and compliance with laws, holding people to account when defenders are attacked, and cutting off the escalation because oftentimes it's not an isolated attack."</p>
 <p>Latin America is not an exception; environmental violence is a global phenomenon. Nana Kwesi Osei Bonsu, an indigenous Ghanaian defender, knows this all too well, "I was forced to flee my homeland because of threats to my life." To him, he was failed by the state.</p>
 <p>The numbers only tell one part of the story. The documented attacks don't include other forms of violence like intimidation or threats, <strong>underscoring the true scale of the conflict.</strong></p>
